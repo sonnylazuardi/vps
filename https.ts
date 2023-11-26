@@ -1,6 +1,5 @@
 // Function to handle HTTPS requests
 const handleHttpsRequest = (request) => {
-  console.log('Request received! ', request);
   if (request.method === 'POST' && request.url.includes('/deploy')) {
     console.log('Deploying...');
 
@@ -16,7 +15,7 @@ const handleHttpsRequest = (request) => {
   }
 
   return new Response(
-    `Welcome to Bun over HTTPS! Requested path: ${request.url}! SHIP IT LETSGO 🚀`
+    `Welcome to Bun over HTTPS! Requested path: ${request.url}! SHIP IT V1 🚀`
   );
 };
 
