@@ -1,7 +1,7 @@
 // Function to handle HTTPS requests
 const handleHttpsRequest = (request) => {
   console.log('Request received! ', request);
-  if (request.method === 'POST' && request.url === '/deploy') {
+  if (request.method === 'POST' && request.url.includes('/deploy')) {
     console.log('Deploying...');
 
     const deploy = Bun.spawn('sh', ['./deploy.sh']);
