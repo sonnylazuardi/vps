@@ -20,7 +20,7 @@ const handleHttpsRequest = (request) => {
   }
 
   return new Response(
-    `Welcome to Bun over HTTPS! Requested path: ${request.url}! Amazing progress 🚀`
+    `Welcome to Bun over HTTPS! Requested path: ${request.url}! SHIP 🚀`
   );
 };
 
