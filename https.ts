@@ -7,10 +7,6 @@ const handleHttpsRequest = (request) => {
       cmd: ['sh', './deploy.sh'],
     });
 
-    deploy.on('close', (code) => {
-      console.log(`child process exited with code ${code}`);
-    });
-
     return new Response('Deployment triggered successfully!', { status: 200 });
   }
 
