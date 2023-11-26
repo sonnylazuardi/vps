@@ -7,10 +7,11 @@ const handleHttpRequest = (request) => {
   });
 };
 
+const HTTP_PORT = process.env.HTTP_PORT || 80;
 // Run both servers concurrently
 Bun.serve({
-  port: 80,
+  port: HTTP_PORT,
   fetch: handleHttpRequest,
 });
 
-console.log("Bun servers redirect, running on 80");
+console.log(`Bun servers redirect, running on ${HTTP_PORT}`);

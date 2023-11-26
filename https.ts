@@ -2,11 +2,9 @@
 const handleHttpsRequest = (request) => {
   if (request.method === 'POST' && request.url.includes('/deploy')) {
     console.log('Deploying...');
-
-    const deploy = Bun.spawn({
+    Bun.spawn({
       cmd: ['sh', './deploy.sh'],
     });
-
     return new Response('Deployment triggered successfully!', { status: 200 });
   }
 
@@ -15,13 +13,15 @@ const handleHttpsRequest = (request) => {
   );
 };
 
+const HTTPS_PORT = process.env.HTTPS_PORT || 443;
+
 Bun.serve({
-  port: 443,
+  port: HTTPS_PORT,
   fetch: handleHttpsRequest,
   tls: {
-    cert: Bun.file("/etc/letsencrypt/live/vps.sonnylab.com/fullchain.pem"),
-    key: Bun.file("/etc/letsencrypt/live/vps.sonnylab.com/privkey.pem"),
+    cert: Bun.file(process.env.BUN_CERT),
+    key: Bun.file(process.env.BUN_KEY),
   },
 });
 
-console.log("Bun servers listening on ports 443");
+console.log(`Bun servers listening on ports ${HTTPS_PORT}`);
