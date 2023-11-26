@@ -1,5 +1,6 @@
 // Function to handle HTTPS requests
 const handleHttpsRequest = (request) => {
+  console.log('Request received! ', request);
   if (request.method === 'POST' && request.url === '/deploy') {
     console.log('Deploying...');
 
