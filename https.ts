@@ -7,13 +7,6 @@ const handleHttpsRequest = (request) => {
     const deploy = Bun.spawn({
       cmd: ['sh', './deploy.sh'],
     });
-    deploy.stdout.on('data', (data) => {
-      console.log(`stdout: ${data}`);
-    });
-
-    deploy.stderr.on('data', (data) => {
-      console.error(`stderr: ${data}`);
-    });
 
     deploy.on('close', (code) => {
       console.log(`child process exited with code ${code}`);
@@ -23,7 +16,7 @@ const handleHttpsRequest = (request) => {
   }
 
   return new Response(
-    `Welcome to Bun over HTTPS! Requested path: ${request.url}! SHIP IT PARROT 🚀`
+    `Welcome to Bun over HTTPS! Requested path: ${request.url}! SHIP IT LETSGO 🚀`
   );
 };
 
