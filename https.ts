@@ -4,7 +4,9 @@ const handleHttpsRequest = (request) => {
   if (request.method === 'POST' && request.url.includes('/deploy')) {
     console.log('Deploying...');
 
-    const deploy = Bun.spawn('sh', ['./deploy.sh']);
+    const deploy = Bun.spawn({
+      cmd: ['sh', './deploy.sh'],
+    });
     deploy.stdout.on('data', (data) => {
       console.log(`stdout: ${data}`);
     });
