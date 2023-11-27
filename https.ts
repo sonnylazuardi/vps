@@ -29,7 +29,7 @@ const handleHttpsRequest = async (request) => {
   }
 
   return new Response(
-    `Welcome to Bun over HTTPS! Requested path: ${request.url}! SHIP IT V9 🚀`
+    `Welcome to Bun over HTTPS! Requested path: ${request.url}! SHIP IT V10 🚀`
   );
 };
 
