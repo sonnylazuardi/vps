@@ -6,10 +6,13 @@ import { router } from './src/router';
 import { contract } from './src/contract';
 import { generateOpenApi } from '@ts-rest/open-api';
 import * as swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+// Use cors middleware
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send(`Welcome to Bun over HTTPS! SHIP IT V21 🚀`);
