@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "bun-types": "^1.0.14"
+    "bun-types": "^1.0.14",
+    "drizzle-kit": "^0.20.6"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.29.0"
   }
 }
