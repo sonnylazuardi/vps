@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.send(`Welcome to Bun over HTTPS! SHIP IT V14 🚀`);
+  res.send(`Welcome to Bun over HTTPS! SHIP IT V15 🚀`);
 });
 
 app.post('/deploy', (req, res) => {
