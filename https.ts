@@ -1,49 +1,38 @@
+import express from 'express';
+import { createServer } from 'https';
 import { fetchUsers, insertUser } from "./src/db";
 
-// Function to handle HTTPS requests
-const handleHttpsRequest = async (request) => {
-  if (request.method === 'POST' && request.url.includes('/deploy')) {
-    console.log('Deploying...');
-    Bun.spawn({
-      cmd: ['sh', './deploy.sh'],
-    });
-    return new Response('Deployment triggered successfully!', { status: 200 });
-  }
+const app = express();
 
-  if (request.method === 'POST' && request.url.includes('/users')) {
-    console.log('Adding a user...');
-    insertUser({ name: 'Bun', email: 'bun@bun.sh' });
-    return new Response('ok', { status: 200 });
-  }
+app.get('/', (req, res) => {
+  res.send(`Welcome to Bun over HTTPS! Requested path: ${req.url}! SHIP IT V10 🚀`);
+});
 
-  if (request.method === 'GET' && request.url.includes('/users')) {
-    console.log('Adding a user...');
-    const users = await fetchUsers();
-    const usersJson = JSON.stringify(users);
-    return new Response(usersJson, {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  }
+app.post('/deploy', (req, res) => {
+  console.log('Deploying...');
+  Bun.spawn({
+    cmd: ['sh', './deploy.sh'],
+  });
+  res.send(`Deployment triggered successfully!`);
+});
 
-  return new Response(
-    `Welcome to Bun over HTTPS! Requested path: ${request.url}! SHIP IT V10 🚀`
-  );
-};
+app.post('/users', (req, res) => {
+  console.log('Adding a user...');
+  insertUser({ name: 'Bun', email: 'bun@bun.sh' });
+  res.send('ok');
+});
+
+app.get('/users', async (req, res) => {
+  console.log('List users...');
+  const users = await fetchUsers();
+  res.json(users);
+});
 
 const HTTPS_PORT = process.env.HTTPS_PORT || 443;
 
-Bun.serve({
-  port: HTTPS_PORT,
-  fetch: handleHttpsRequest,
-  ...(process.env.BUN_CERT && process.env.BUN_KEY && {
-    tls: {
-      cert: Bun.file(process.env.BUN_CERT),
-      key: Bun.file(process.env.BUN_KEY),
-    }
-  }),
+createServer(process.env.BUN_CERT && {
+  cert: Bun.file(process.env.BUN_CERT),
+  key: Bun.file(process.env.BUN_KEY),
+} || {}, app).listen(HTTPS_PORT, () => {
+  console.log(`Listening on port ${HTTPS_PORT}...`);
 });
-
-console.log(`Bun servers listening on ports ${HTTPS_PORT}`);
