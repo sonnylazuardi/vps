@@ -1,8 +1,11 @@
 import express from 'express';
+import bodyParser from "body-parser";
 import { createServer } from 'https';
-import { fetchUsers, insertUser } from "./src/db";
+import { deleteUser, fetchUser, fetchUsers, insertUser } from "./src/db";
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.send(`Welcome to Bun over HTTPS! Requested path: ${req.url}! SHIP IT V11 🚀`);
@@ -16,14 +19,22 @@ app.post('/deploy', (req, res) => {
   res.send(`Deployment triggered successfully!`);
 });
 
-app.post('/users', (req, res) => {
-  console.log('Adding a user...');
-  insertUser({ name: 'Bun', email: 'bun@bun.sh' });
-  res.send('ok');
+app.post('/users', async (req, res) => {
+  const result = insertUser({ name: req.body.name, email: req.body.email });
+  res.json(result);
+});
+
+app.delete('/users/:id', async (req, res) => {
+  const result = deleteUser(req.params.id);
+  res.json(result);
+});
+
+app.get('/users/:id', async (req, res) => {
+  const user = await fetchUser(req.params.id);
+  res.json(user);
 });
 
 app.get('/users', async (req, res) => {
-  console.log('List users...');
   const users = await fetchUsers();
   res.json(users);
 });
