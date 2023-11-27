@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "target": "es2017",
     "module": "commonjs",
     "types": ["bun-types"] // this is necessary
   }
