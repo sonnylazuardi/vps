@@ -1,4 +1,6 @@
 #!/bin/bash
 
-git pull origin main  # Replace 'main' with your branch name
-bun install          # Or yarn install
+git fetch origin
+git reset --hard origin/main
+bun install
+pm2 restart "bun https.ts"
