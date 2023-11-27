@@ -8,8 +8,8 @@ export const fetchUsers = async () => {
 }
 
 export const fetchUser = async (id: number) => {
-  const result = await db.query.users.findMany({ where: eq(users.id, id) });
-  return result[0];
+  const [result] = await db.query.users.findMany({ where: eq(users.id, id) });
+  return result;
 }
 
 export const updateUser = async (id: number, body: InsertUser) => {
