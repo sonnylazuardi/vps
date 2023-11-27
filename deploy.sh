@@ -3,4 +3,4 @@
 git fetch origin
 git reset --hard origin/main
 bun install
-pm2 restart 6
+pm2 restart "bun --watch https"
