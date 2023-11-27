@@ -22,6 +22,15 @@ export const contract = c.router({
     body: c.type<{ name: string, email: string }>(),
     summary: 'Update a user',
   },
+  deleteUser: {
+    method: 'DELETE',
+    path: '/users/:id',
+    responses: {
+      201: c.type<User>(),
+    },
+    body: null,
+    summary: 'Delete a user',
+  },
   getUser: {
     method: 'GET',
     path: `/users/:id`,

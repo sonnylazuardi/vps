@@ -1,5 +1,5 @@
 import { contract } from './contract';
-import { fetchUser, fetchUsers, insertUser, updateUser } from './db/users';
+import { deleteUser, fetchUser, fetchUsers, insertUser, updateUser } from './db/users';
 import { initServer } from '@ts-rest/express';
 
 const s = initServer();
@@ -27,6 +27,13 @@ export const router = s.router(contract, {
   },
   putUser: async ({ params: { id }, body }) => {
     const [result] = await updateUser(parseInt(id), body);
+    return {
+      status: 200,
+      body: result,
+    };
+  },
+  deleteUser: async ({ params: { id } }) => {
+    const [result] = await deleteUser(parseInt(id));
     return {
       status: 200,
       body: result,
