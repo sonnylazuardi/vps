@@ -1,14 +1,14 @@
 import express from 'express';
 import bodyParser from "body-parser";
 import { createServer } from 'https';
-import { deleteUser, fetchUser, fetchUsers, insertUser, updateUser } from "./src/db";
+import usersRoute from './src/routes/users';
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.send(`Welcome to Bun over HTTPS! Requested path: ${req.url}! SHIP IT V12 🚀`);
+  res.send(`Welcome to Bun over HTTPS! Requested path: ${req.url}! SHIP IT V13 🚀`);
 });
 
 app.post('/deploy', (req, res) => {
@@ -19,30 +19,7 @@ app.post('/deploy', (req, res) => {
   res.send(`Deployment triggered successfully!`);
 });
 
-app.post('/users', async (req, res) => {
-  const result = await insertUser({ name: req.body.name, email: req.body.email });
-  res.json(result);
-});
-
-app.delete('/users/:id', async (req, res) => {
-  const result = await deleteUser(req.params.id);
-  res.json(result);
-});
-
-app.get('/users/:id', async (req, res) => {
-  const result = await fetchUser(req.params.id);
-  res.json(result);
-});
-
-app.put('/users/:id', async (req, res) => {
-  const result = await updateUser(req.params.id, req.body);
-  res.json(result);
-});
-
-app.get('/users', async (req, res) => {
-  const result = await fetchUsers();
-  res.json(result);
-});
+app.use('/users', usersRoute);
 
 const HTTPS_PORT = process.env.HTTPS_PORT || 443;
 
