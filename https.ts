@@ -1,14 +1,18 @@
 import express from 'express';
 import bodyParser from "body-parser";
 import { createServer } from 'https';
-import usersRoute from './src/routes/users';
+import { createExpressEndpoints } from '@ts-rest/express';
+import { router } from './src/router';
+import { contract } from './src/contract';
+import { generateOpenApi } from '@ts-rest/open-api';
+import * as swaggerUi from 'swagger-ui-express';
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.send(`Welcome to Bun over HTTPS! Requested path: ${req.url}! SHIP IT V13 🚀`);
+  res.send(`Welcome to Bun over HTTPS! SHIP IT V14 🚀`);
 });
 
 app.post('/deploy', (req, res) => {
@@ -19,13 +23,24 @@ app.post('/deploy', (req, res) => {
   res.send(`Deployment triggered successfully!`);
 });
 
-app.use('/users', usersRoute);
+createExpressEndpoints(contract, router, app);
+
+const openApiDocument = generateOpenApi(contract, {
+  info: {
+    title: 'VPS API',
+    version: '1.0.0',
+  },
+});
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
 const HTTPS_PORT = process.env.HTTPS_PORT || 443;
 
-createServer(process.env.BUN_CERT && {
+const options: any = process.env.BUN_CERT ? {
   cert: Bun.file(process.env.BUN_CERT),
   key: Bun.file(process.env.BUN_KEY),
-} || {}, app).listen(HTTPS_PORT, () => {
+} : {};
+
+createServer(options, app).listen(HTTPS_PORT, () => {
   console.log(`Listening on port ${HTTPS_PORT}...`);
 });

@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm';
 
 export const fetchUsers = async () => {
   const result = await db.query.users.findMany();
-  return result;
+  return result as unknown as User[];
 }
 
 export const fetchUser = async (id: number) => {
@@ -12,7 +12,7 @@ export const fetchUser = async (id: number) => {
   return result[0];
 }
 
-export const updateUser = async (id: number, body: User) => {
+export const updateUser = async (id: number, body: InsertUser) => {
   const result = await db.update(users)
     .set(body)
     .where(eq(users.id, id)).returning();
