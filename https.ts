@@ -5,7 +5,7 @@ import { fetchUsers, insertUser } from "./src/db";
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send(`Welcome to Bun over HTTPS! Requested path: ${req.url}! SHIP IT V10 🚀`);
+  res.send(`Welcome to Bun over HTTPS! Requested path: ${req.url}! SHIP IT V11 🚀`);
 });
 
 app.post('/deploy', (req, res) => {
