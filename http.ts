@@ -7,7 +7,7 @@ const handleHttpRequest = (request) => {
   });
 };
 
-const HTTP_PORT = process.env.HTTP_PORT || 80;
+const HTTP_PORT = process.env.HTTP_PORT || 3000;
 // Run both servers concurrently
 Bun.serve({
   port: HTTP_PORT,

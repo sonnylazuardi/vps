@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.get('/', (req, res) => {
-  res.send(`Welcome to Bun over HTTPS! SHIP IT V21 🚀`);
+  res.send(`Welcome to Bun over HTTPS! SHIP IT V22 🚀`);
 });
 
 app.post('/deploy', (req, res) => {
@@ -37,7 +37,7 @@ const openApiDocument = generateOpenApi(contract, {
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
-const HTTPS_PORT = process.env.HTTPS_PORT || 443;
+const HTTPS_PORT = process.env.HTTPS_PORT || 3000;
 
 const options: any = process.env.BUN_CERT ? {
   cert: Bun.file(process.env.BUN_CERT),
