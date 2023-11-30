@@ -8,6 +8,8 @@ It is a simple API backend application that uses the following technologies:
 - Express
 - Swagger UI Express
 
+![screen](screen.png)
+
 ## Getting Started
 
 To get started, clone this repository and run `bun install` to install the dependencies. Then, run `bun https.ts` to start the development server.
