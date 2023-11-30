@@ -6,6 +6,7 @@ It is a simple API backend application that uses the following technologies:
 - Bun SQLite
 - Drizzle ORM
 - Express
+- TS Rest
 - Swagger UI Express
 
 ![screen](screen.png)
